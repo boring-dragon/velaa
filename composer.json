@@ -1,6 +1,7 @@
 {
     "name": "jinas/velaa",
     "description": "Php Mvc microframework",
+    "license": "MIT",
     "authors": [
         {
             "name": "Mohamed Jinas",
