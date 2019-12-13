@@ -1,0 +1,38 @@
+{
+    "name": "jinas/velaa",
+    "description": "Php Mvc microframework",
+    "authors": [
+        {
+            "name": "Mohamed Jinas",
+            "email": "j@live.mv"
+        }
+    ],
+    "require": {
+        "symfony/var-dumper": "^4.3",
+        "filp/whoops": "^2.5",
+        "vlucas/phpdotenv": "^3.6",
+        "symfony/console": "^4.3",
+        "pecee/simple-router": "4.2.0.6",
+        "twig/twig": "2.0",
+        "nesbot/carbon": "^2.25",
+        "symfony/http-foundation": "^4.3",
+        "illuminate/database": "^6.6",
+        "illuminate/pagination": "^6.6",
+        "ramsey/uuid": "^3.8",
+        "moontoast/math": "^1.1",
+        "illuminate/filesystem": "^6.6",
+        "illuminate/events": "^6.6",
+        "baraveli/container": "^1.0"
+    },
+    "autoload": {
+        "classmap": [
+            "./"
+        ],
+        "psr-4": {
+            "Velaa\\": "core/"
+        }
+    },
+    "require-dev": {
+        "fzaninotto/faker": "^1.8"
+    }
+}
