@@ -14,7 +14,6 @@
         "vlucas/phpdotenv": "^3.6",
         "symfony/console": "^4.3",
         "pecee/simple-router": "4.2.0.6",
-        "twig/twig": "2.0",
         "nesbot/carbon": "^2.25",
         "symfony/http-foundation": "^4.3",
         "illuminate/database": "^6.6",
