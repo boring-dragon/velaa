@@ -2,9 +2,11 @@
 require 'vendor/autoload.php';
 require 'bootstrap/app.php';
 
-use Velaa\Core\Http\Route;
+use Velaa\Core\Router;
+use Velaa\Core\Http\Request;
 
-Route::setDefaultNamespace('\App\Controllers');
-require_once 'routes/web.php';
+$request = new Request;
 
-Route::start();
+$router = new Router;
+$router->load('routes/web.php')
+        ->direct($request->uri(), $request->method());

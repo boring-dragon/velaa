@@ -28,18 +28,11 @@ function json($data)
 }
 
 /**
- * redirect
+ * Redirect to a new page.
  *
- * @param  mixed $url
- * @param  mixed $code
- *
- * @return void
+ * @param  string $path
  */
-function redirect(string $url, ?int $code = null): void
+function redirect($path)
 {
-    if ($code !== null) {
-        response()->httpCode($code);
-    }
-
-    response()->redirect($url);
+    header("Location: /{$path}");
 }
