@@ -2,8 +2,7 @@
 #!/usr/bin/env php
 
 use Acme\ControllerCommand;
-use Acme\ServeCommand;
-use Acme\LoadClassCommand;
+use Acme\{ServeCommand, LoadClassCommand, EggCommand};
 use Symfony\Component\Console\Application;
 
 if (file_exists(__DIR__.'/../../autoload.php')) {
@@ -18,5 +17,6 @@ $app = new Application('Velaa cli', '1.0');
 
 $app->add(new ServeCommand);
 $app->add(new LoadClassCommand);
+$app->add(new EggCommand);
 
 $app->run();

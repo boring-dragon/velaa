@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Controllers;
+namespace Velaa\Core\Utils;
+
 
 use Velaa\Core\Utils\ResponseUtil;
 
-class APIController
+class ResponseMaker
 {
 
     /**
@@ -17,7 +18,7 @@ class APIController
      */
     public function sendResponse($result, $message)
     {
-        return json(ResponseUtil::makeResponse($message, $result));
+        return json_encode(ResponseUtil::makeResponse($message, $result));
     }
 
     /**
@@ -30,6 +31,6 @@ class APIController
      */
     public function sendError($error, $code = 404)
     {
-        return json(ResponseUtil::makeError($error), $code);
+        return json_encode(ResponseUtil::makeError($error), $code);
     }
 }

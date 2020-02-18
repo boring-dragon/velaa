@@ -14,6 +14,12 @@ function view($name, $data = [])
     require "views/{$name}.view.php";
 }
 
+function jsonify($data, $message)
+{
+    $response = new \Velaa\Core\Utils\ResponseMaker;
+    echo $response->sendResponse($data, $message);
+}
+
 
 /**
  * json

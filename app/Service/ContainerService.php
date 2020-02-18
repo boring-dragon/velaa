@@ -2,9 +2,8 @@
 
 namespace App\Service;
 
-use Baraveli\Container\Container;
+use Velaa\Core\Container;
 use App\Service\RequestService;
-use Velaa\Core\Database\Driver;
 
 class ContainerService
 {
@@ -16,7 +15,5 @@ class ContainerService
     public static function load()
     {
         Container::bind('request', RequestService::capture());
-        
-        Driver::dispatch();
     }
 }

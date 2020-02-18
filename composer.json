@@ -13,15 +13,8 @@
         "filp/whoops": "^2.5",
         "vlucas/phpdotenv": "^3.6",
         "symfony/console": "^4.3",
-        "nesbot/carbon": "^2.25",
         "symfony/http-foundation": "^4.3",
-        "illuminate/database": "^6.6",
-        "illuminate/pagination": "^6.6",
-        "ramsey/uuid": "^3.8",
-        "moontoast/math": "^1.1",
-        "illuminate/filesystem": "^6.6",
-        "illuminate/events": "^6.6",
-        "baraveli/container": "^1.0"
+        "phpfastcache/phpfastcache": "^7.1"
     },
     "autoload": {
         "classmap": [
@@ -30,8 +23,5 @@
         "psr-4": {
             "Velaa\\": "core/"
         }
-    },
-    "require-dev": {
-        "fzaninotto/faker": "^1.8"
     }
 }
