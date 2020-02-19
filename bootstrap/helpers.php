@@ -20,19 +20,6 @@ function jsonify($data, $message)
     echo $response->sendResponse($data, $message);
 }
 
-
-/**
- * json
- *
- * @param  mixed $data
- *
- * @return void
- */
-function json($data)
-{
-    json_encode($data, JSON_PRETTY_PRINT);
-}
-
 /**
  * Redirect to a new page.
  *

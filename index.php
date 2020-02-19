@@ -3,10 +3,8 @@ require 'vendor/autoload.php';
 require 'bootstrap/app.php';
 
 use Velaa\Core\Router;
-use Velaa\Core\Http\Request;
+use Velaa\Core\Request;
 
-$request = new Request;
+Router::load('routes/web.php')
 
-$router = new Router;
-$router->load('routes/web.php')
-        ->direct($request->uri(), $request->method());
+->direct(Request::uri(), Request::method());

@@ -1,4 +1,13 @@
 <?php
+/*
+|--------------------------------------------------------------------------
+| Application bootsrap file
+|--------------------------------------------------------------------------
+|
+| Bootstrap file that loads components before the framework starts
+|
+*/
+
 require 'helpers.php';
 
 use App\Service\ContainerService;

@@ -13,8 +13,7 @@
         "filp/whoops": "^2.5",
         "vlucas/phpdotenv": "^3.6",
         "symfony/console": "^4.3",
-        "symfony/http-foundation": "^4.3",
-        "phpfastcache/phpfastcache": "^7.1"
+        "symfony/http-foundation": "^4.3"
     },
     "autoload": {
         "classmap": [
@@ -23,5 +22,8 @@
         "psr-4": {
             "Velaa\\": "core/"
         }
+    },
+    "require-dev": {
+        "fzaninotto/faker": "^1.9"
     }
 }
