@@ -6,22 +6,22 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 
-class LoadClassCommand extends Command{
+class DatabaseMigrateCommand extends Command
+{
+    protected $command = 'migrate';
 
-    protected $name = 'load:class';
-
-    protected $description = 'Dump the classes again';
+    protected $description = 'Migrate the tables into database';
 
     public function configure()
     {
-        $this->setName($this->name)
+        $this->setName($this->command)
              ->setDescription($this->description);
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        
-        system('composer dumpautoload');
+        //\App\Migrations\testmigration::make();
+       
+        $output->writeln("<info>Tables migrated!</info>");
     }
-
-}    
+}

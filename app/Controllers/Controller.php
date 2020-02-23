@@ -2,9 +2,8 @@
 
 namespace App\Controllers;
 
-use Velaa\Core\Helpers\Helper;
-
+use Velaa\Core\Traits\Loggers\VelaaLogger;
 class Controller
 {
-    use Helper;
+    use VelaaLogger;
 }

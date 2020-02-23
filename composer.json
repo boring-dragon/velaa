@@ -1,6 +1,6 @@
 {
     "name": "jinas/velaa",
-    "description": "Php Mvc microframework",
+    "description": "PHP microframework for API's",
     "license": "MIT",
     "authors": [
         {
@@ -13,7 +13,12 @@
         "filp/whoops": "^2.5",
         "vlucas/phpdotenv": "^3.6",
         "symfony/console": "^4.3",
-        "symfony/http-foundation": "^4.3"
+        "symfony/http-foundation": "^4.3",
+        "ikkez/f3-schema-builder": "dev-master",
+        "spatie/array-to-xml": "^2.11",
+        "symfony/yaml": "^5.0",
+        "monolog/monolog": "^2.0",
+        "rakit/validation": "^1.2"
     },
     "autoload": {
         "classmap": [

@@ -2,7 +2,14 @@
 #!/usr/bin/env php
 
 use Acme\ControllerCommand;
-use Acme\{ServeCommand, LoadClassCommand, EggCommand};
+use Acme\{ServeCommand, 
+LoadClassCommand, 
+EggCommand,
+LogClearCommand,
+MakeModelCommand,
+DatabaseMigrateCommand,
+MakeMigrationCommand
+};
 use Symfony\Component\Console\Application;
 
 if (file_exists(__DIR__.'/../../autoload.php')) {
@@ -10,6 +17,7 @@ if (file_exists(__DIR__.'/../../autoload.php')) {
 } else {
     require __DIR__.'/vendor/autoload.php';
 }
+require 'bootstrap/app.php';
 
 
 
@@ -18,5 +26,9 @@ $app = new Application('Velaa cli', '1.0');
 $app->add(new ServeCommand);
 $app->add(new LoadClassCommand);
 $app->add(new EggCommand);
+$app->add(new LogClearCommand);
+$app->add(new MakeModelCommand);
+$app->add(new MakeMigrationCommand);
+$app->add(new DatabaseMigrateCommand);
 
 $app->run();

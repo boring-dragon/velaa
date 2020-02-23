@@ -6,7 +6,7 @@ namespace Velaa\Core\Utils;
  * The Collection class allows you to access a set of data
  * using both array and object notation.
  */
-class Collection implements \ArrayAccess, \Iterator, \Countable
+class Collection implements \Iterator, \Countable
 {
     /**
      * Collection data.
@@ -80,52 +80,6 @@ class Collection implements \ArrayAccess, \Iterator, \Countable
         unset($this->data[$key]);
     }
 
-    /**
-     * Gets an item at the offset.
-     *
-     * @param string $offset Offset
-     * @return mixed Value
-     */
-    public function offsetGet($offset)
-    {
-        return isset($this->data[$offset]) ? $this->data[$offset] : null;
-    }
-
-    /**
-     * Sets an item at the offset.
-     *
-     * @param string $offset Offset
-     * @param mixed $value Value
-     */
-    public function offsetSet($offset, $value)
-    {
-        if (is_null($offset)) {
-            $this->data[] = $value;
-        } else {
-            $this->data[$offset] = $value;
-        }
-    }
-
-    /**
-     * Checks if an item exists at the offset.
-     *
-     * @param string $offset Offset
-     * @return bool Item status
-     */
-    public function offsetExists($offset)
-    {
-        return isset($this->data[$offset]);
-    }
-
-    /**
-     * Removes an item at the offset.
-     *
-     * @param string $offset Offset
-     */
-    public function offsetUnset($offset)
-    {
-        unset($this->data[$offset]);
-    }
 
     /**
      * Resets the collection.
@@ -201,7 +155,7 @@ class Collection implements \ArrayAccess, \Iterator, \Countable
      *
      * @return array Collection data
      */
-    public function getData()
+    public function get()
     {
         return $this->data;
     }
@@ -211,7 +165,7 @@ class Collection implements \ArrayAccess, \Iterator, \Countable
      *
      * @param array $data New collection data
      */
-    public function setData(array $data)
+    public function set(array $data)
     {
         $this->data = $data;
     }
@@ -232,5 +186,34 @@ class Collection implements \ArrayAccess, \Iterator, \Countable
     public function jsonify()
     {
         return json_encode($this->data);
+    }
+
+    /**
+     * first
+     * 
+     *  Return the first item of the collection
+     *
+     * @return void
+     */
+    public function first()
+    {
+        return $this->data[0];
+    }
+
+    /**
+     * second
+     * 
+     *  Return the second item from the colelction
+     *
+     * @return void
+     */
+    public function second()
+    {
+        return $this->data[1];
+    }
+
+    public function latest()
+    {
+        return end($this->data);
     }
 }

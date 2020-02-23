@@ -1,0 +1,11 @@
+<?php
+namespace App\Models;
+
+class {className} {
+
+
+    // Class configuration
+    static $table = '';
+    static $id_field = '';
+    //static $name_field = '';
+}

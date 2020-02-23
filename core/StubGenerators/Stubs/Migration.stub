@@ -1,0 +1,19 @@
+<?php
+namespace App\migrations;
+
+use Velaa\Core\Database\SchemaBuilder;
+
+class {className}
+{
+    public static function make()
+    {
+        $schema = SchemaBuilder::make();
+        $table = $schema->createTable({tablename});
+        $table->primary('id');  
+        //Add the fields
+
+
+
+        $table->build();
+    }
+}
