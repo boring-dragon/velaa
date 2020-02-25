@@ -18,7 +18,8 @@
         "spatie/array-to-xml": "^2.11",
         "symfony/yaml": "^5.0",
         "monolog/monolog": "^2.0",
-        "rakit/validation": "^1.2"
+        "rakit/validation": "^1.2",
+        "bramus/router": "^1.4"
     },
     "autoload": {
         "classmap": [

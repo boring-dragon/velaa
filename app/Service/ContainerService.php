@@ -17,9 +17,9 @@ class ContainerService
     public static function load()
     {
         Container::bind('request', RequestService::capture());
-        //Container::bind('database', new QueryBuilder(MysqlAdapter::make()));
-        //Container::bind('collection', new \Velaa\Core\Utils\Collection());
-        //Container::bind('validator', new  \Velaa\Core\Http\Validator());
-        //Container::bind('faker',  \Faker\Factory::create());
+        Container::bind('database', new QueryBuilder(MysqlAdapter::make()));
+        Container::bind('collection', new \Velaa\Core\Utils\Collection());
+        Container::bind('validator', new  \Velaa\Core\Http\Validator());
+        Container::bind('faker',  \Faker\Factory::create());
     }
 }
