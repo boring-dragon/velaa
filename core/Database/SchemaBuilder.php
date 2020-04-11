@@ -7,6 +7,6 @@ class SchemaBuilder
     {
         $db = new \DB\SQL('mysql:host='.getenv('DB_HOST').';port=3306;dbname='.getenv('DB_DATABASE'), getenv('DB_USERNAME'), getenv('DB_PASSWORD'));
 
-        return $schema = new \DB\SQL\Schema($db);
+        return new \DB\SQL\Schema($db);
     }
 }
