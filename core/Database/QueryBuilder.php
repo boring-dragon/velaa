@@ -1019,6 +1019,11 @@ class QueryBuilder
         if (!$this->is_cached && $key !== null) {
             $this->store($key, $data, $expire);
         }
+        
+        if(empty($data))
+        {
+            throw new Exception("Record doesn't exist in the current database context");
+        }
 
         return $data;
     }
