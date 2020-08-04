@@ -1,4 +1,5 @@
 <?php
+
 namespace Velaa\Core\Database;
 
 class SchemaBuilder

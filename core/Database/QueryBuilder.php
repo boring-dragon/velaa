@@ -1,9 +1,10 @@
 <?php
+
 namespace Velaa\Core\Database;
 
+use Exception;
 use PDO;
 use ReflectionClass;
-use Exception;
 
 class QueryBuilder
 {
@@ -26,13 +27,12 @@ class QueryBuilder
     protected $query_time;
     protected $class;
 
-
-    protected static $db_types = array(
-        'pdo', 'mysqli', 'mysql', 'pgsql', 'sqlite', 'sqlite3'
-    );
-    protected static $cache_types = array(
-        'memcached', 'memcache', 'xcache'
-    );
+    protected static $db_types = [
+        'pdo', 'mysqli', 'mysql', 'pgsql', 'sqlite', 'sqlite3',
+    ];
+    protected static $cache_types = [
+        'memcached', 'memcache', 'xcache',
+    ];
 
     public $last_query;
     public $num_rows;
@@ -56,8 +56,9 @@ class QueryBuilder
     /**
      * Joins string tokens into a SQL statement.
      *
-     * @param string $sql SQL statement
+     * @param string $sql   SQL statement
      * @param string $input Input string to append
+     *
      * @return string New SQL statement
      */
     public function build($sql, $input)
@@ -69,8 +70,10 @@ class QueryBuilder
      * Parses a connection string into an object.
      *
      * @param string $connection Connection string
-     * @return array Connection information
+     *
      * @throws Exception For invalid connection string
+     *
+     * @return array Connection information
      */
     public function parseConnection($connection)
     {
@@ -80,7 +83,7 @@ class QueryBuilder
             throw new Exception('Invalid connection string.');
         }
 
-        $cfg = array();
+        $cfg = [];
 
         $cfg['type'] = isset($url['scheme']) ? $url['scheme'] : $url['path'];
         $cfg['hostname'] = isset($url['host']) ? $url['host'] : null;
@@ -113,14 +116,14 @@ class QueryBuilder
 
         $this->stats['avg_query_time'] =
             $this->stats['total_time'] /
-            (float)(($this->stats['num_queries'] > 0) ? $this->stats['num_queries'] : 1);
+            (float) (($this->stats['num_queries'] > 0) ? $this->stats['num_queries'] : 1);
 
         return $this->stats;
     }
 
     /**
-     * logStats
-     * 
+     * logStats.
+     *
      *  Log staticstics to logger
      *
      * @return void
@@ -171,12 +174,14 @@ class QueryBuilder
     /**
      * Parses a condition statement.
      *
-     * @param string $field Database field
-     * @param string $value Condition value
-     * @param string $join Joining word
-     * @param boolean $escape Escape values setting
-     * @return string Condition as a string
+     * @param string $field  Database field
+     * @param string $value  Condition value
+     * @param string $join   Joining word
+     * @param bool   $escape Escape values setting
+     *
      * @throws Exception For invalid where condition
+     *
+     * @return string Condition as a string
      */
     protected function parseCondition($field, $value = null, $join = '', $escape = true)
     {
@@ -217,14 +222,14 @@ class QueryBuilder
             }
 
             if (empty($join)) {
-                $join = ($field{0} == '|') ? ' OR' : ' AND';
+                $join = ($field[0] == '|') ? ' OR' : ' AND';
             }
 
             if (is_array($value)) {
                 if (strpos($operator, '@') === false) {
                     $condition = ' IN ';
                 }
-                $value = '('.implode(',', array_map(array($this, 'quote'), $value)).')';
+                $value = '('.implode(',', array_map([$this, 'quote'], $value)).')';
             } else {
                 $value = ($escape && !is_numeric($value)) ? $this->quote($value) : $value;
             }
@@ -236,6 +241,7 @@ class QueryBuilder
                 $str .= $this->parseCondition($key, $value, $join, $escape);
                 $join = '';
             }
+
             return $str;
         } else {
             throw new Exception('Invalid where condition.');
@@ -246,7 +252,8 @@ class QueryBuilder
      * Sets the table.
      *
      * @param string $table Table name
-     * @param boolean $reset Reset class properties
+     * @param bool   $reset Reset class properties
+     *
      * @return object Self reference
      */
     public function from($table, $reset = true)
@@ -262,20 +269,22 @@ class QueryBuilder
     /**
      * Adds a table join.
      *
-     * @param string $table Table to join to
-     * @param array $fields Fields to join on
-     * @param string $type Type of join
-     * @return object Self reference
+     * @param string $table  Table to join to
+     * @param array  $fields Fields to join on
+     * @param string $type   Type of join
+     *
      * @throws Exception For invalid join type
+     *
+     * @return object Self reference
      */
     public function join($table, array $fields, $type = 'INNER')
     {
-        static $joins = array(
+        static $joins = [
             'INNER',
             'LEFT OUTER',
             'RIGHT OUTER',
-            'FULL OUTER'
-        );
+            'FULL OUTER',
+        ];
 
         if (!in_array($type, $joins)) {
             throw new Exception('Invalid join type.');
@@ -290,8 +299,9 @@ class QueryBuilder
     /**
      * Adds a left table join.
      *
-     * @param string $table Table to join to
-     * @param array $fields Fields to join on
+     * @param string $table  Table to join to
+     * @param array  $fields Fields to join on
+     *
      * @return object Self reference
      */
     public function leftJoin($table, array $fields)
@@ -302,8 +312,9 @@ class QueryBuilder
     /**
      * Adds a right table join.
      *
-     * @param string $table Table to join to
-     * @param array $fields Fields to join on
+     * @param string $table  Table to join to
+     * @param array  $fields Fields to join on
+     *
      * @return object Self reference
      */
     public function rightJoin($table, array $fields)
@@ -314,8 +325,9 @@ class QueryBuilder
     /**
      * Adds a full table join.
      *
-     * @param string $table Table to join to
-     * @param array $fields Fields to join on
+     * @param string $table  Table to join to
+     * @param array  $fields Fields to join on
+     *
      * @return object Self reference
      */
     public function fullJoin($table, array $fields)
@@ -327,7 +339,8 @@ class QueryBuilder
      * Adds where conditions.
      *
      * @param string|array $field A field name or an array of fields and values.
-     * @param string $value A field value to compare to
+     * @param string       $value A field value to compare to
+     *
      * @return object Self reference
      */
     public function where($field, $value = null)
@@ -342,6 +355,7 @@ class QueryBuilder
      * Adds an ascending sort for a field.
      *
      * @param string $field Field name
+     *
      * @return object Self reference
      */
     public function sortAsc($field)
@@ -353,6 +367,7 @@ class QueryBuilder
      * Adds an descending sort for a field.
      *
      * @param string $field Field name
+     *
      * @return object Self reference
      */
     public function sortDesc($field)
@@ -363,8 +378,9 @@ class QueryBuilder
     /**
      * Adds fields to order by.
      *
-     * @param string $field Field name
+     * @param string $field     Field name
      * @param string $direction Sort direction
+     *
      * @return object Self reference
      */
     public function orderBy($field, $direction = 'ASC')
@@ -390,6 +406,7 @@ class QueryBuilder
      * Adds fields to group by.
      *
      * @param string|array $field Field name or array of field names
+     *
      * @return object Self reference
      */
     public function groupBy($field)
@@ -406,7 +423,8 @@ class QueryBuilder
      * Adds having conditions.
      *
      * @param string|array $field A field name or an array of fields and values.
-     * @param string $value A field value to compare to
+     * @param string       $value A field value to compare to
+     *
      * @return object Self reference
      */
     public function having($field, $value = null)
@@ -420,8 +438,9 @@ class QueryBuilder
     /**
      * Adds a limit to the query.
      *
-     * @param int $limit Number of rows to limit
+     * @param int $limit  Number of rows to limit
      * @param int $offset Number of rows to offset
+     *
      * @return object Self reference
      */
     public function limit($limit, $offset = null)
@@ -440,7 +459,8 @@ class QueryBuilder
      * Adds an offset to the query.
      *
      * @param int $offset Number of rows to offset
-     * @param int $limit Number of rows to limit
+     * @param int $limit  Number of rows to limit
+     *
      * @return object Self reference
      */
     public function offset($offset, $limit = null)
@@ -468,7 +488,7 @@ class QueryBuilder
     /**
      * Sets a between where clause.
      *
-     * @param string $field Database field
+     * @param string $field  Database field
      * @param string $value1 First value
      * @param string $value2 Second value
      */
@@ -486,8 +506,9 @@ class QueryBuilder
      * Builds a select query.
      *
      * @param array|string $fields Array of field names to select
-     * @param int $limit Limit condition
-     * @param int $offset Offset condition
+     * @param int          $limit  Limit condition
+     * @param int          $offset Offset condition
+     *
      * @return object Self reference
      */
     public function select($fields = '*', $limit = null, $offset = null)
@@ -497,7 +518,7 @@ class QueryBuilder
         $fields = (is_array($fields)) ? implode(',', $fields) : $fields;
         $this->limit($limit, $offset);
 
-        $this->sql(array(
+        $this->sql([
             'SELECT',
             $this->distinct,
             $fields,
@@ -509,8 +530,8 @@ class QueryBuilder
             $this->having,
             $this->order,
             $this->limit,
-            $this->offset
-        ));
+            $this->offset,
+        ]);
 
         return $this;
     }
@@ -519,6 +540,7 @@ class QueryBuilder
      * Builds an insert query.
      *
      * @param array $data Array of key and values to insert
+     *
      * @return object Self reference
      */
     public function insert(array $data)
@@ -532,18 +554,18 @@ class QueryBuilder
         $keys = implode(',', array_keys($data));
         $values = implode(',', array_values(
             array_map(
-                array($this, 'quote'),
+                [$this, 'quote'],
                 $data
             )
         ));
 
-        $this->sql(array(
+        $this->sql([
             'INSERT INTO',
             $this->table,
             '('.$keys.')',
             'VALUES',
-            '('.$values.')'
-        ));
+            '('.$values.')',
+        ]);
 
         return $this;
     }
@@ -552,6 +574,7 @@ class QueryBuilder
      * Builds an update query.
      *
      * @param string|array $data Array of keys and values, or string literal
+     *
      * @return object Self reference
      */
     public function update($data)
@@ -562,23 +585,23 @@ class QueryBuilder
             return $this;
         }
 
-        $values = array();
+        $values = [];
 
         if (is_array($data)) {
             foreach ($data as $key => $value) {
                 $values[] = (is_numeric($key)) ? $value : $key.'='.$this->quote($value);
             }
         } else {
-            $values[] = (string)$data;
+            $values[] = (string) $data;
         }
 
-        $this->sql(array(
+        $this->sql([
             'UPDATE',
             $this->table,
             'SET',
             implode(',', $values),
-            $this->where
-        ));
+            $this->where,
+        ]);
 
         return $this;
     }
@@ -587,6 +610,7 @@ class QueryBuilder
      * Builds a delete query.
      *
      * @param array $where Where conditions
+     *
      * @return object Self reference
      */
     public function delete($where = null)
@@ -597,11 +621,11 @@ class QueryBuilder
             $this->where($where);
         }
 
-        $this->sql(array(
+        $this->sql([
             'DELETE FROM',
             $this->table,
-            $this->where
-        ));
+            $this->where,
+        ]);
 
         return $this;
     }
@@ -610,6 +634,7 @@ class QueryBuilder
      * Gets or sets the SQL statement.
      *
      * @param string|array SQL statement
+     *
      * @return string SQL statement
      */
     public function sql($sql = null)
@@ -617,7 +642,7 @@ class QueryBuilder
         if ($sql !== null) {
             $this->sql = trim(
                 (is_array($sql)) ?
-                    array_reduce($sql, array($this, 'build')) :
+                    array_reduce($sql, [$this, 'build']) :
                     $sql
             );
 
@@ -633,6 +658,7 @@ class QueryBuilder
      * Sets the database connection.
      *
      * @param string|array|object $db Database connection string, array or object
+     *
      * @throws Exception For connection error
      */
     public function setDb($db)
@@ -770,6 +796,7 @@ class QueryBuilder
      * Gets the database type.
      *
      * @param object|resource $db Database object or resource
+     *
      * @return string Database type
      */
     public function getDbType($db)
@@ -795,10 +822,12 @@ class QueryBuilder
     /**
      * Executes a sql statement.
      *
-     * @param string $key Cache key
-     * @param int $expire Expiration time in seconds
-     * @return object Query results object
+     * @param string $key    Cache key
+     * @param int    $expire Expiration time in seconds
+     *
      * @throws Exception When database is not defined
+     *
+     * @return object Query results object
      */
     public function execute($key = null, $expire = 0)
     {
@@ -824,9 +853,9 @@ class QueryBuilder
 
         if ($this->stats_enabled) {
             if (empty($this->stats)) {
-                $this->stats = array(
-                    'queries' => array()
-                );
+                $this->stats = [
+                    'queries' => [],
+                ];
             }
 
             $this->query_time = microtime(true);
@@ -929,18 +958,19 @@ class QueryBuilder
                 if ($this->show_sql) {
                     $error .= "\nSQL: ".$this->sql;
                 }
+
                 throw new Exception('Database error: '.$error);
             }
         }
 
         if ($this->stats_enabled) {
             $time = microtime(true) - $this->query_time;
-            $this->stats['queries'][] = array(
-                'query' => $this->sql,
-                'time' => $time,
-                'rows' => (int)$this->num_rows,
-                'changes' => (int)$this->affected_rows
-            );
+            $this->stats['queries'][] = [
+                'query'   => $this->sql,
+                'time'    => $time,
+                'rows'    => (int) $this->num_rows,
+                'changes' => (int) $this->affected_rows,
+            ];
         }
 
         return $result;
@@ -949,8 +979,9 @@ class QueryBuilder
     /**
      * Fetch multiple rows from a select query.
      *
-     * @param string $key Cache key
-     * @param int $expire Expiration time in seconds
+     * @param string $key    Cache key
+     * @param int    $expire Expiration time in seconds
+     *
      * @return array Rows
      */
     public function get($key = null, $expire = 0)
@@ -959,7 +990,7 @@ class QueryBuilder
             $this->select();
         }
 
-        $data = array();
+        $data = [];
 
         $result = $this->execute($key, $expire);
 
@@ -974,7 +1005,7 @@ class QueryBuilder
                 case 'pdo':
                     $data = $result->fetchAll(PDO::FETCH_ASSOC);
                     $this->num_rows = sizeof($data);
- 
+
                     break;
 
                 case 'mysqli':
@@ -987,7 +1018,7 @@ class QueryBuilder
                     }
                     $result->close();
                     break;
-           
+
                 case 'mysql':
                     while ($row = mysql_fetch_assoc($result)) {
                         $data[] = $row;
@@ -1019,9 +1050,8 @@ class QueryBuilder
         if (!$this->is_cached && $key !== null) {
             $this->store($key, $data, $expire);
         }
-        
-        if(empty($data))
-        {
+
+        if (empty($data)) {
             throw new Exception("Record doesn't exist in the current database context");
         }
 
@@ -1031,8 +1061,9 @@ class QueryBuilder
     /**
      * Fetch a single row from a select query.
      *
-     * @param string $key Cache key
-     * @param int $expire Expiration time in seconds
+     * @param string $key    Cache key
+     * @param int    $expire Expiration time in seconds
+     *
      * @return array Row
      */
     public function one($key = null, $expire = 0)
@@ -1043,7 +1074,7 @@ class QueryBuilder
 
         $data = $this->get($key, $expire);
 
-        $row = (!empty($data)) ? $data[0] : array();
+        $row = (!empty($data)) ? $data[0] : [];
 
         return $row;
     }
@@ -1051,9 +1082,10 @@ class QueryBuilder
     /**
      * Fetch a value from a field.
      *
-     * @param string $name Database field name
-     * @param string $key Cache key
-     * @param int $expire Expiration time in seconds
+     * @param string $name   Database field name
+     * @param string $key    Cache key
+     * @param int    $expire Expiration time in seconds
+     *
      * @return mixed Row value
      */
     public function value($name, $key = null, $expire = 0)
@@ -1068,9 +1100,10 @@ class QueryBuilder
     /**
      * Gets the min value for a specified field.
      *
-     * @param string $field Field name
-     * @param int $expire Expiration time in seconds
-     * @param string $key Cache key
+     * @param string $field  Field name
+     * @param int    $expire Expiration time in seconds
+     * @param string $key    Cache key
+     *
      * @return object Self reference
      */
     public function min($field, $key = null, $expire = 0)
@@ -1087,9 +1120,10 @@ class QueryBuilder
     /**
      * Gets the max value for a specified field.
      *
-     * @param string $field Field name
-     * @param int $expire Expiration time in seconds
-     * @param string $key Cache key
+     * @param string $field  Field name
+     * @param int    $expire Expiration time in seconds
+     * @param string $key    Cache key
+     *
      * @return object Self reference
      */
     public function max($field, $key = null, $expire = 0)
@@ -1106,9 +1140,10 @@ class QueryBuilder
     /**
      * Gets the sum value for a specified field.
      *
-     * @param string $field Field name
-     * @param int $expire Expiration time in seconds
-     * @param string $key Cache key
+     * @param string $field  Field name
+     * @param int    $expire Expiration time in seconds
+     * @param string $key    Cache key
+     *
      * @return object Self reference
      */
     public function sum($field, $key = null, $expire = 0)
@@ -1125,9 +1160,10 @@ class QueryBuilder
     /**
      * Gets the average value for a specified field.
      *
-     * @param string $field Field name
-     * @param int $expire Expiration time in seconds
-     * @param string $key Cache key
+     * @param string $field  Field name
+     * @param int    $expire Expiration time in seconds
+     * @param string $key    Cache key
+     *
      * @return object Self reference
      */
     public function avg($field, $key = null, $expire = 0)
@@ -1144,9 +1180,10 @@ class QueryBuilder
     /**
      * Gets a count of records for a table.
      *
-     * @param string $field Field name
-     * @param string $key Cache key
-     * @param int $expire Expiration time in seconds
+     * @param string $field  Field name
+     * @param string $key    Cache key
+     * @param int    $expire Expiration time in seconds
+     *
      * @return object Self reference
      */
     public function count($field = '*', $key = null, $expire = 0)
@@ -1164,6 +1201,7 @@ class QueryBuilder
      * Wraps quotes around a string and escapes the content for a string parameter.
      *
      * @param mixed $value mixed value
+     *
      * @return mixed Quoted value
      */
     public function quote($value)
@@ -1196,8 +1234,8 @@ class QueryBuilder
             }
 
             $value = str_replace(
-                array('\\', "\0", "\n", "\r", "'", '"', "\x1a"),
-                array('\\\\', '\\0', '\\n', '\\r', "\\'", '\\"', '\\Z'),
+                ['\\', "\0", "\n", "\r", "'", '"', "\x1a"],
+                ['\\\\', '\\0', '\\n', '\\r', "\\'", '\\"', '\\Z'],
                 $value
             );
 
@@ -1213,6 +1251,7 @@ class QueryBuilder
      * Sets the cache connection.
      *
      * @param string|object $cache Cache connection string or object
+     *
      * @throws Exception For invalid cache type
      */
     public function setCache($cache)
@@ -1221,7 +1260,7 @@ class QueryBuilder
 
         // Connection string
         if (is_string($cache)) {
-            if ($cache{0} == '.' || $cache{0} == '/') {
+            if ($cache[0] == '.' || $cache[0] == '/') {
                 $this->cache = $cache;
                 $this->cache_type = 'file';
             } else {
@@ -1232,7 +1271,7 @@ class QueryBuilder
         elseif (is_array($cache)) {
             switch ($cache['type']) {
                 case 'memcache':
-                    $this->cache = new Memcache;
+                    $this->cache = new Memcache();
                     $this->cache->connect(
                         $cache['hostname'],
                         $cache['port']
@@ -1240,7 +1279,7 @@ class QueryBuilder
                     break;
 
                 case 'memcached':
-                    $this->cache = new Memcached;
+                    $this->cache = new Memcached();
                     $this->cache->addServer(
                         $cache['hostname'],
                         $cache['port']
@@ -1279,9 +1318,9 @@ class QueryBuilder
     /**
      * Stores a value in the cache.
      *
-     * @param string $key Cache key
-     * @param mixed $value Value to store
-     * @param int $expire Expiration time in seconds
+     * @param string $key    Cache key
+     * @param mixed  $value  Value to store
+     * @param int    $expire Expiration time in seconds
      */
     public function store($key, $value, $expire = 0)
     {
@@ -1306,10 +1345,10 @@ class QueryBuilder
 
             case 'file':
                 $file = $this->cache.'/'.md5($key);
-                $data = array(
-                    'value' => $value,
-                    'expire' => ($expire > 0) ? (time() + $expire) : 0
-                );
+                $data = [
+                    'value'  => $value,
+                    'expire' => ($expire > 0) ? (time() + $expire) : 0,
+                ];
                 file_put_contents($file, serialize($data));
                 break;
 
@@ -1322,6 +1361,7 @@ class QueryBuilder
      * Fetches a value from the cache.
      *
      * @param string $key Cache key
+     *
      * @return mixed Cached value
      */
     public function fetch($key)
@@ -1332,11 +1372,13 @@ class QueryBuilder
             case 'memcached':
                 $value = $this->cache->get($key);
                 $this->is_cached = ($this->cache->getResultCode() == Memcached::RES_SUCCESS);
+
                 return $value;
 
             case 'memcache':
                 $value = $this->cache->get($key);
                 $this->is_cached = ($value !== false);
+
                 return $value;
 
             case 'apc':
@@ -1344,6 +1386,7 @@ class QueryBuilder
 
             case 'xcache':
                 $this->is_cached = xcache_isset($key);
+
                 return xcache_get($key);
 
             case 'file':
@@ -1362,6 +1405,7 @@ class QueryBuilder
             default:
                 return $this->cache[$key];
         }
+
         return null;
     }
 
@@ -1369,6 +1413,7 @@ class QueryBuilder
      * Clear a value from the cache.
      *
      * @param string $key Cache key
+     *
      * @return object Self reference
      */
     public function clear($key)
@@ -1393,13 +1438,16 @@ class QueryBuilder
                 if (file_exists($file)) {
                     return unlink($file);
                 }
+
                 return false;
 
             default:
                 if (isset($this->cache[$key])) {
                     unset($this->cache[$key]);
+
                     return true;
                 }
+
                 return false;
         }
     }
@@ -1438,7 +1486,7 @@ class QueryBuilder
                 break;
 
             default:
-                $this->cache = array();
+                $this->cache = [];
                 break;
         }
     }
@@ -1449,6 +1497,7 @@ class QueryBuilder
      * Sets the class.
      *
      * @param string|object $class Class name or instance
+     *
      * @return object Self reference
      */
     public function using($class)
@@ -1468,7 +1517,8 @@ class QueryBuilder
      * Loads properties for an object.
      *
      * @param object $object Class instance
-     * @param array $data Property data
+     * @param array  $data   Property data
+     *
      * @return object Populated object
      */
     public function load($object, array $data)
@@ -1481,12 +1531,13 @@ class QueryBuilder
 
         return $object;
     }
-   
+
     /**
      * Finds and populates an object.
      *
      * @param int|string|array Search value
      * @param string $key Cache key
+     *
      * @return object Populated object
      */
     public function find($value = null, $key = null)
@@ -1512,10 +1563,10 @@ class QueryBuilder
         }
 
         $data = $this->get($key);
-        $objects = array();
+        $objects = [];
 
         foreach ($data as $row) {
-            $objects[] = $this->load(new $this->class, $row);
+            $objects[] = $this->load(new $this->class(), $row);
         }
 
         return (sizeof($objects) == 1) ? $objects[0] : $objects;
@@ -1525,7 +1576,7 @@ class QueryBuilder
      * Saves an object to the database.
      *
      * @param object $object Class instance
-     * @param array $fields Select database fields to save
+     * @param array  $fields Select database fields to save
      */
     public function save($object, array $fields = null)
     {
@@ -1588,23 +1639,23 @@ class QueryBuilder
      */
     public function getProperties()
     {
-        static $properties = array();
+        static $properties = [];
 
         if (!$this->class) {
-            return array();
+            return [];
         }
 
         if (!isset($properties[$this->class])) {
-            static $defaults = array(
-                'table' => null,
-                'id_field' => null,
-                'name_field' => null
-            );
+            static $defaults = [
+                'table'      => null,
+                'id_field'   => null,
+                'name_field' => null,
+            ];
 
             $reflection = new ReflectionClass($this->class);
             $config = $reflection->getStaticProperties();
 
-            $properties[$this->class] = (object)array_merge($defaults, $config);
+            $properties[$this->class] = (object) array_merge($defaults, $config);
         }
 
         return $properties[$this->class];

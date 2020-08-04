@@ -1,25 +1,26 @@
 <?php
+
 namespace Velaa\Core\Traits\Loggers;
 
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
 use Monolog\Formatter\JsonFormatter;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 trait VelaaLogger
 {
     /**
-     * logger
+     * logger.
      *
-     * @param  mixed $channel
-     * @param  mixed $message
+     * @param mixed $channel
+     * @param mixed $message
      *
      * @return void
      */
-    public function logger(string $channel = "default.log", $message)
+    public function logger(string $channel = 'default.log', $message)
     {
         $logger = new Logger($channel);
 
-        $logstream = new StreamHandler("stash/logs/".$channel.".log", Logger::INFO);
+        $logstream = new StreamHandler('stash/logs/'.$channel.'.log', Logger::INFO);
 
         $logstream->setFormatter(new JsonFormatter());
 

@@ -1,22 +1,24 @@
-<?php namespace Velaa\Core\Interfaces;
+<?php
 
-interface IResponseUtil{
+namespace Velaa\Core\Interfaces;
 
+interface IResponseUtil
+{
     /**
-     * makeResponse
+     * makeResponse.
      *
-     * @param  mixed $message
-     * @param  mixed $data
+     * @param mixed $message
+     * @param mixed $data
      *
      * @return void
      */
     public static function makeResponse($message, $data);
 
     /**
-     * makeError
+     * makeError.
      *
-     * @param  mixed $message
-     * @param  mixed $data
+     * @param mixed $message
+     * @param mixed $data
      *
      * @return void
      */

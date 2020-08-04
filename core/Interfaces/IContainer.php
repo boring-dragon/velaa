@@ -5,19 +5,19 @@ namespace Velaa\Core\Interfaces;
 interface IContainer
 {
     /**
-     * bind
+     * bind.
      *
-     * @param  mixed $key
-     * @param  mixed $value
+     * @param mixed $key
+     * @param mixed $value
      *
      * @return void
      */
     public static function bind($key, $value);
 
     /**
-     * get
+     * get.
      *
-     * @param  mixed $key
+     * @param mixed $key
      *
      * @return void
      */

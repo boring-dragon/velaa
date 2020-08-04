@@ -1,11 +1,10 @@
 <?php
 
-
 /**
- * view
+ * view.
  *
- * @param  mixed $name
- * @param  mixed $data
+ * @param mixed $name
+ * @param mixed $data
  *
  * @return void
  */
@@ -21,48 +20,48 @@ Responses
 */
 
 /**
- * jsonify
+ * jsonify.
  *
- * @param  mixed $data
- * @param  mixed $message
+ * @param mixed $data
+ * @param mixed $message
  *
  * jsonify the response
  *
  * @return void
  */
-function jsonify($data, $message = "received successfully!")
+function jsonify($data, $message = 'received successfully!')
 {
-    $response = new \Velaa\Core\Http\Response;
+    $response = new \Velaa\Core\Http\Response();
     $response->headers->set('Content-Type', 'application/json');
-    $responsemaker = new \Velaa\Core\Utils\ResponseMaker;
+    $responsemaker = new \Velaa\Core\Utils\ResponseMaker();
     $response->setContent($responsemaker->sendResponse($data, $message));
     $response->send();
 }
 
 /**
- * sendJson
- * 
+ * sendJson.
+ *
  *  send json as response
  *
- * @param  mixed $data
+ * @param mixed $data
  *
  * @return void
  */
 function sendJson($data)
 {
-    $response = new \Velaa\Core\Http\Response;
+    $response = new \Velaa\Core\Http\Response();
     $response->headers->set('Content-Type', 'application/json');
     $response->setContent(json_encode($data));
     $response->send();
 }
 
 /**
- * jsonifyError
+ * jsonifyError.
  *
  *  TODO: intergrate symfony response
  *
- * @param  mixed $error_message
- * @param  mixed $code
+ * @param mixed $error_message
+ * @param mixed $code
  *
  * jsonify with an error
  *
@@ -70,14 +69,14 @@ function sendJson($data)
  */
 function jsonifyError($error_message, $code)
 {
-    $response = new \Velaa\Core\Utils\ResponseMaker;
+    $response = new \Velaa\Core\Utils\ResponseMaker();
     echo $response->sendError($error_message, $code);
 }
 
 /**
- * toXML
+ * toXML.
  *
- * @param  mixed $array
+ * @param mixed $array
  *
  *  Response with xml
  *
@@ -87,7 +86,7 @@ function toXML($array)
 {
     $raw = json_encode($array);
     $data = json_decode($raw, true);
-    $response = new \Velaa\Core\Http\Response;
+    $response = new \Velaa\Core\Http\Response();
     $response->headers->set('Content-Type', 'application/xml');
     $responsemaker = \Spatie\ArrayToXml\ArrayToXml::convert($data);
     $response->setContent($responsemaker);
@@ -95,9 +94,9 @@ function toXML($array)
 }
 
 /**
- * toYAML
+ * toYAML.
  *
- * @param  mixed $array
+ * @param mixed $array
  *
  * Response with YAML
  *
@@ -107,7 +106,7 @@ function toYAML($array)
 {
     $raw = json_encode($array);
     $data = json_decode($raw, true);
-    $response = new \Velaa\Core\Http\Response;
+    $response = new \Velaa\Core\Http\Response();
     $response->headers->set('Content-Type', 'text/yaml');
     $responsemaker = \Symfony\Component\Yaml\Yaml::dump($data);
     $response->setContent($responsemaker);
@@ -117,7 +116,7 @@ function toYAML($array)
 /**
  * Redirect to a new page.
  *
- * @param  string $path
+ * @param string $path
  */
 function redirect($path)
 {
@@ -148,17 +147,17 @@ function base_path($path = '')
 // Public path
 function public_path($path = '')
 {
-    return base_path(). 'public'.DIRECTORY_SEPARATOR;
+    return base_path().'public'.DIRECTORY_SEPARATOR;
 }
 
 // stash path
 function stash_path($path = '')
 {
-    return base_path() . DIRECTORY_SEPARATOR. 'stash'.DIRECTORY_SEPARATOR;
+    return base_path().DIRECTORY_SEPARATOR.'stash'.DIRECTORY_SEPARATOR;
 }
 
 //log path
 function log_path($path = '')
 {
-    return stash_path() . 'logs'. DIRECTORY_SEPARATOR;
+    return stash_path().'logs'.DIRECTORY_SEPARATOR;
 }

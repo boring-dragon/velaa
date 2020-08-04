@@ -1,10 +1,11 @@
 <?php
+
 namespace Acme;
 
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputArgument;
 
 class MakeModelCommand extends Command
 {
@@ -24,6 +25,6 @@ class MakeModelCommand extends Command
         $classname = $input->getArgument('classname');
         \Velaa\Core\StubGenerators\ModelStubGenerator::generate($classname);
         system('composer dump-autoload');
-        $output->writeln("<info>".$classname." Model has been generated!</info>");
+        $output->writeln('<info>'.$classname.' Model has been generated!</info>');
     }
 }
