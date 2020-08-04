@@ -1,34 +1,35 @@
 <?php
+
 namespace Velaa\Core\Loggers;
 
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
 use Monolog\Formatter\JsonFormatter;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 class QueryLogger
 {
-    
     /**
-     * log
+     * log.
      *
      * @return void
      */
     public static function log($query)
     {
-        $logger = new Logger("sql queries");
+        $logger = new Logger('sql queries');
 
-        $logstream = new StreamHandler("stash".DIRECTORY_SEPARATOR."logs".DIRECTORY_SEPARATOR."core".DIRECTORY_SEPARATOR."query.log", Logger::INFO);
+        $logstream = new StreamHandler('stash'.DIRECTORY_SEPARATOR.'logs'.DIRECTORY_SEPARATOR.'core'.DIRECTORY_SEPARATOR.'query.log', Logger::INFO);
 
         $logstream->setFormatter(new JsonFormatter());
 
         $logger->pushHandler($logstream);
 
-        $logger->pushProcessor(function ($record) use($query) {
+        $logger->pushProcessor(function ($record) use ($query) {
             $record['context'] = $query;
+
             return $record;
         });
 
-        $logger->info("Query Logged");
+        $logger->info('Query Logged');
 
         return $logger;
     }

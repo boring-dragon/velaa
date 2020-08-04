@@ -13,13 +13,13 @@ require 'helpers.php';
 use App\Service\ContainerService;
 
 error_reporting(E_ALL);
-$whoops = new \Whoops\Run;
+$whoops = new \Whoops\Run();
 $debug = true;
 if ($debug) {
-    $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+    $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler());
     assert_options(ASSERT_ACTIVE, true);
 } else {
-    $whoops->pushHandler(function($e){
+    $whoops->pushHandler(function ($e) {
         \Velaa\Core\Templates\ErrorRender::render($e);
     });
 }

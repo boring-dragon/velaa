@@ -2,17 +2,13 @@
 
 namespace Velaa\Core\Utils;
 
-
-use Velaa\Core\Utils\ResponseUtil;
-
 class ResponseMaker
 {
-
     /**
-     * sendResponse
+     * sendResponse.
      *
-     * @param  mixed $result
-     * @param  mixed $message
+     * @param mixed $result
+     * @param mixed $message
      *
      * @return void
      */
@@ -22,10 +18,10 @@ class ResponseMaker
     }
 
     /**
-     * sendError
+     * sendError.
      *
-     * @param  mixed $error
-     * @param  mixed $code
+     * @param mixed $error
+     * @param mixed $code
      *
      * @return void
      */

@@ -7,10 +7,10 @@ use Velaa\Core\Interfaces\IResponseUtil;
 class ResponseUtil implements IResponseUtil
 {
     /**
-     * makeResponse
+     * makeResponse.
      *
-     * @param  mixed $message
-     * @param  mixed $data
+     * @param mixed $message
+     * @param mixed $data
      *
      * @return void
      */
@@ -19,7 +19,7 @@ class ResponseUtil implements IResponseUtil
         return [
             'success' => true,
             'data'    => $data,
-            'message' => $message
+            'message' => $message,
         ];
     }
 

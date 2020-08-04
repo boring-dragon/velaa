@@ -1,4 +1,5 @@
 <?php
+
 namespace Velaa\Core\Database\Adapters;
 
 use PDO;
@@ -6,7 +7,7 @@ use PDO;
 class SqliteAdapter
 {
     /**
-     * make
+     * make.
      *
      * @return void
      */
@@ -15,11 +16,11 @@ class SqliteAdapter
         try {
             $file_db = new PDO('sqlite:'.getenv('DB_DATABASE').'.sqlite3');
             // Set errormode to exceptions
-            $file_db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+            $file_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             return $file_db;
         } catch (PDOException $e) {
-            die($e->getMessage());
+            exit($e->getMessage());
         }
     }
 }

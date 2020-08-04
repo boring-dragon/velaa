@@ -1,10 +1,11 @@
 <?php
+
 namespace Acme;
 
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputArgument;
 
 class ServeCommand extends Command
 {
@@ -25,7 +26,7 @@ class ServeCommand extends Command
         if (!isset($port)) {
             $port = 8080;
         }
-        $output->writeln("<info>Your Velaa app is running on localhost:".$port."</info>");
+        $output->writeln('<info>Your Velaa app is running on localhost:'.$port.'</info>');
         system('php -S localhost:'.$port);
     }
 }

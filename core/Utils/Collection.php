@@ -16,10 +16,10 @@ class Collection implements \Iterator, \Countable
     private $data;
 
     /**
-     * __toString
+     * __toString.
      *
      * Jsonify the collection automatically when the trying to output as a string.
-     * 
+     *
      * @return void
      */
     public function __toString()
@@ -32,7 +32,7 @@ class Collection implements \Iterator, \Countable
      *
      * @param array $data Initial data
      */
-    public function __construct(array $data = array())
+    public function __construct(array $data = [])
     {
         $this->data = $data;
     }
@@ -41,6 +41,7 @@ class Collection implements \Iterator, \Countable
      * Gets an item.
      *
      * @param string $key Key
+     *
      * @return mixed Value
      */
     public function __get($key)
@@ -51,8 +52,8 @@ class Collection implements \Iterator, \Countable
     /**
      * Set an item.
      *
-     * @param string $key Key
-     * @param mixed $value Value
+     * @param string $key   Key
+     * @param mixed  $value Value
      */
     public function __set($key, $value)
     {
@@ -63,6 +64,7 @@ class Collection implements \Iterator, \Countable
      * Checks if an item exists.
      *
      * @param string $key Key
+     *
      * @return bool Item status
      */
     public function __isset($key)
@@ -80,7 +82,6 @@ class Collection implements \Iterator, \Countable
         unset($this->data[$key]);
     }
 
-
     /**
      * Resets the collection.
      */
@@ -88,7 +89,7 @@ class Collection implements \Iterator, \Countable
     {
         reset($this->data);
     }
- 
+
     /**
      * Gets current collection item.
      *
@@ -98,7 +99,7 @@ class Collection implements \Iterator, \Countable
     {
         return current($this->data);
     }
- 
+
     /**
      * Gets current collection key.
      *
@@ -108,7 +109,7 @@ class Collection implements \Iterator, \Countable
     {
         return key($this->data);
     }
- 
+
     /**
      * Gets the next collection value.
      *
@@ -118,7 +119,7 @@ class Collection implements \Iterator, \Countable
     {
         return next($this->data);
     }
- 
+
     /**
      * Checks if the current collection key is valid.
      *
@@ -127,7 +128,8 @@ class Collection implements \Iterator, \Countable
     public function valid()
     {
         $key = key($this->data);
-        return ($key !== null && $key !== false);
+
+        return $key !== null && $key !== false;
     }
 
     /**
@@ -175,11 +177,11 @@ class Collection implements \Iterator, \Countable
      */
     public function clear()
     {
-        $this->data = array();
+        $this->data = [];
     }
 
     /**
-     *   convert the collection to json
+     *   convert the collection to json.
      *
      * @return void
      */
@@ -189,8 +191,8 @@ class Collection implements \Iterator, \Countable
     }
 
     /**
-     * first
-     * 
+     * first.
+     *
      *  Return the first item of the collection
      *
      * @return void
@@ -201,8 +203,8 @@ class Collection implements \Iterator, \Countable
     }
 
     /**
-     * second
-     * 
+     * second.
+     *
      *  Return the second item from the colelction
      *
      * @return void

@@ -1,4 +1,5 @@
 <?php
+
 namespace Velaa\Core\Templates;
 
 class ErrorRender
@@ -44,12 +45,12 @@ class ErrorRender
               to{box-shadow: inset -3px 0px 0px transparent;}
         }";
 
-        $output = "<style>".$style."</style><div id='main'>
+        $output = '<style>'.$style."</style><div id='main'>
     	        <div class='fof'>
-        		<h1>".$message."</h1>
+        		<h1>".$message.'</h1>
     	        </div>
-                </div>";
+                </div>';
 
-    echo $output;
+        echo $output;
     }
 }
